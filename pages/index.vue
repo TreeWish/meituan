@@ -1,14 +1,31 @@
 <template>
-  <div class="container">
+  <div class="page-index">
+    <el-row>
+      <el-col :span="5">
+        <index-menu />
+      </el-col>
+      <el-col :span="19">
+        <life/>
+      </el-col>
+    </el-row>
+    <el-row >
+      <el-col :span="24">
+        <artistic/>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import IndexMenu from '@/components/index/menu.vue'
+import Life from '@/components/index/life.vue'
+import Artistic from '@/components/index/artistic.vue'
 
 export default {
   components: {
-    Logo
+    IndexMenu,
+    Life,
+    Artistic
   }
 }
 </script>
