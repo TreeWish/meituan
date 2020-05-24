@@ -4,13 +4,14 @@
       width: 980px;
       height: auto;
       margin: 40px auto 30px;
-      .logo {
-        background-image: url(//s0.meituan.net/bs/file/?f=fe-sso-fs:build/assets/sp-retina.b95a7dd.png);
-        background-position: 0 !important;
-        background-size: contain !important;
-        width: 82px;
-        height: 54px;
-        display: block;
+      .site-logo {
+        display: inline-block;
+        width: 128px;
+        width: 54px;
+        height: 36px;
+        text-indent: -9999px;
+        background-position: -669px -748px;
+        background-image: url(//s0.meituan.net/bs/file/?f=fe-sso-fs:build/assets/sp-normal.2ee5c09.png);
       }
     }
     .login-panel {
