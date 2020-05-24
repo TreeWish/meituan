@@ -2,9 +2,9 @@ import Router from 'koa-router'
 import Redis from 'koa-redis'
 import nodeMailer from 'nodemailer'
 import User from '../dbs/models/users'
-import Passpost from './untils/passport'
+import Passpost from './utils/passport'
 import Email from '../dbs/config'
-import axios from './untils/axios'
+import axios from './utils/axios'
 
 let router = new Router({
   prefix: '/users'

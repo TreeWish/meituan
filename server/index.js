@@ -8,8 +8,9 @@ import sesson from 'koa-generic-session'
 import Redis from 'koa-redis'
 import json from 'koa-json'
 import dbConfig from './dbs/config'
-import passport from './api/untils/passport'
-import users from './api/users'
+import passport from './api/utils/passport'
+import users from './api/users';
+import geo from './api/geo'
 
 const app = new Koa()
 app.keys = ['mt', 'keyskeys']
@@ -46,6 +47,7 @@ async function start () {
     await builder.build()
   }
   app.use(users.routes()).use(users.allowedMethods())
+  app.use(geo.routes()).use(geo.allowedMethods())
   app.use((ctx) => {
     ctx.status = 200
     ctx.respond = false // Bypass Koa's built-in response handling

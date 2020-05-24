@@ -14,7 +14,7 @@
           {{item.title}}
           <a class="more">更多</a>
         </h2>
-        <span v-for="(i,index) in item.lables" :key="index">{{i}}</span>
+        <span v-for="(i,index) in item.child" :key="index">{{i}}</span>
       </template>
     </div>
   </div>
@@ -25,38 +25,7 @@ export default {
   data() {
     return {
       kind: "",
-      menu: [
-        {
-          type: "food",
-          name: "美食",
-          child: [
-            {
-              title: "美食",
-              lables: ["代金券", "甜点饮品", "火锅", "自助餐", "小吃快餐"]
-            }
-          ]
-        },
-        {
-          type: "takeout",
-          name: "外卖",
-          child: [
-            {
-              title: "外卖",
-              lables: ["美团外卖"]
-            }
-          ]
-        },
-        {
-          type: "hotel",
-          name: "酒店",
-          child: [
-            {
-              title: "酒店星级",
-              lables: ["经济型", "舒适/三星", "高档/四星", "豪华/五星"]
-            }
-          ]
-        }
-      ]
+      menu: this.$store.state.home.menu
     };
   },
   methods: {
