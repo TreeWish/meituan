@@ -18,19 +18,20 @@
           </button>
           <dl class="hotPlace" v-if="isHotPlace">
             <dt>热门搜索</dt>
-            <dd>huoguo</dd>
-            <dd>huoguo</dd>
-            <dd>huoguo</dd>
+            <dd v-for="(item, index) in hotPlace" :key="index">
+              <a :href="'/products?keyword='+encodeURIComponent(item.name)">{{ item.name }}</a>
+            </dd>
           </dl>
           <dl class="searchList" v-if="isSearchList">
-            <dd>huoguo</dd>
-            <dd>huoguo</dd>
-            <dd>huoguo</dd>
+            <dd v-for="(item, index) in searchList" :key="index">
+              <a :href="'/products?keyword='+encodeURIComponent(item.name)">{{ item.name }}</a>
+            </dd>
           </dl>
         </div>
         <p class="suggest">
-          <a href>火锅底料</a>
-          <a href>火锅底料</a>
+          <span v-for="(item, index) in hotPlace" :key="index">
+              <a :href="'/products?keyword='+encodeURIComponent(item.name)">{{ item.name }}</a>
+          </span>
         </p>
         <ul class="nav">
           <li>
@@ -71,6 +72,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   data() {
     return {
@@ -80,15 +82,29 @@ export default {
       searchList: []
     };
   },
+  mounted() {
+    this.hotPlace = this.$store.state.home.hotPlace.slice(0,5);
+  },
   methods: {
-    input(e) {
-      console.log(e.targe);
-    },
+    input: _.debounce(async function() {
+      let city = this.$store.state.geo.position.city.replace('市', '');
+      this.searchList = [];
+      let { status, data: {top}} = await this.$axios.get('/search/top', {
+        params: {
+          input: this.inputs,
+          city
+        }
+      });
+      this.searchList = top.slice(0, 10);
+    }, 300),
     focus() {
       this.isFocus = true;
     },
     blur() {
-      this.isFocus = false;
+      let self=this;
+      setTimeout(function(){
+        self.isFocus=false
+      },200)
     }
   },
   computed: {

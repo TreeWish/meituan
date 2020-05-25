@@ -49,54 +49,44 @@ export default {
     return {
       kind: 'all',
       list: {
-        all: [
-           {
-             title: '海河/图书大厦/创展大厦一居',
-             pos: '整套1举世可住两人',
-          img: 'https://img.meituan.net/phoenix/e79ceadbe6602e17357a6bcdeeb6ece7228168.jpg@740w_416h_1e_1c',
-          price: '299'
-        },
-        {
-          img: 'http://p0.meituan.net/iphoenix/89c656d1ecdeee4c14338e3dc005b0be152422.jpg@740w_416h_1e_1c'
-        }
-        ],
-        part: [
-           {
-          img: 'http://p0.meituan.net/iphoenix/89c656d1ecdeee4c14338e3dc005b0be152422.jpg@740w_416h_1e_1c'
-        }
-        ],
-        spa: [
-          {
-            img: 'http://p1.meituan.net/iphoenix/6892c2dbda446174f0195ae364ebcf9e258534.jpg@740w_416h_1e_1c'
-          }
-        ],
-        movie: [
-          {
-            img: 'https://img.meituan.net/phoenix/36a6f3ce8e39bb3a4dc775b1d3090cb6486989.jpg@740w_416h_1e_1c'
-          }
-        ],
-        travel: [
-          {
-            img: 'https://img.meituan.net/phoenix/f70e424f65c6ecdc3326cf0821f9564c62226.jpg@740w_416h_1e_1c'
-          }
-        ]
+        all: [],
+        part: [],
+        spa: [],
+        movie: [],
+        travel: []
       },
-      curr: [
-        {
-          img: 'https://img.meituan.net/phoenix/e79ceadbe6602e17357a6bcdeeb6ece7228168.jpg@740w_416h_1e_1c'
-        },
-        {
-          img: 'http://p0.meituan.net/iphoenix/89c656d1ecdeee4c14338e3dc005b0be152422.jpg@740w_416h_1e_1c'
-        }
-      ],
+      curr: [],
       active: false
     }
   },
   methods: {
-    over(e) {
-     e.target.className = 'active';
-     this.kind = e.target.getAttribute('kind');
-    //console.log(this.list[this.kind])
+    async over(e) {
+      let dom = e.target;
+      let tag = dom.tagName.toLowerCase();
+      if (tag === 'dd') {
+        dom.className = 'active';
+        this.kind = dom.getAttribute('kind');
+        let keyword = dom.getAttribute('keyword')
+        let { status, data: {count, pois}} = await this.$axios.get('/search/resultsByKeywords', {
+        params: {
+          keyword,
+          city: this.$store.state.geo.position.city
+        }
+        });
+        if (status === 200 && count > 0) {
+          let res = pois.filter(item => item.photos.length).map(item => {
+            return {
+              title: item.name,
+              pos: item.type.split(';')[0],
+              price: item.biz_ext.cost || '暂无',
+              img: item.photos[0].url
+            }
+          });
+          this.list[this.kind] = res.slice(0, 6);
+        } else {
+          this.list[this.kind] = []
+        }
+      }
     },
     out(e) {
       e.target.className = '';
@@ -110,8 +100,29 @@ export default {
       return this.list[this.kind];
     }
   },
+  async mounted() {
+    let { status, data: {count, pois}} = await this.$axios.get('/search/resultsByKeywords', {
+      params: {
+        keyword: '景点',
+        city: this.$store.state.geo.position.city
+      }
+    });
+    if (status === 200 && count > 0) {
+      let res = pois.filter(item => item.photos.length).map(item => {
+        return {
+          title: item.name,
+          pos: item.type.split(';')[0],
+          price: item.biz_ext.cost || '暂无',
+          img: item.photos[0].url
+        }
+      });
+      this.list[this.kind] = res.slice(0, 6);
+    } else {
+      this.list[this.kind] = []
+    }
+  },
 }
 </script>
 <style lang="scss">
-    @import "@/assets/css/index/artistic.scss";
+  @import "@/assets/css/index/artistic.scss";
 </style>

@@ -2,7 +2,7 @@
   "name": "mt",
   "version": "1.0.0",
   "description": "My excellent Nuxt.js project",
-  "author": "魏云龙",
+  "author": "TreeWish",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server --exec babel-node",
