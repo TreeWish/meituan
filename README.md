@@ -1,6 +1,7 @@
 # mt
 
-> My excellent Nuxt.js project
+> Vue全家桶 + Koa2 + Nuxt.js 仿美团网
+> 持续更新中。。。
 
 ## Build Setup
 
