@@ -28,9 +28,9 @@ export default {
 
 <style lang="scss" scoped>
  @import "@/assets/css/changeCity/hot.scss";
- .op-area {
+  .op-area {
   margin-top: 30px;
   padding-bottom: 30px;
   border-bottom: 1px solid #e5e5e5;
-}
+  }
 </style>

@@ -12,6 +12,7 @@ import passport from './api/utils/passport'
 import users from './api/users';
 import geo from './api/geo'
 import search from './api/search'
+import categroy from './api/categroy'
 
 const app = new Koa()
 app.keys = ['mt', 'keyskeys']
@@ -50,6 +51,7 @@ async function start () {
   app.use(users.routes()).use(users.allowedMethods())
   app.use(geo.routes()).use(geo.allowedMethods())
   app.use(search.routes()).use(search.allowedMethods())
+  app.use(categroy.routes()).use(categroy.allowedMethods())
   app.use((ctx) => {
     ctx.status = 200
     ctx.respond = false // Bypass Koa's built-in response handling
