@@ -13,6 +13,7 @@ import users from './api/users';
 import geo from './api/geo'
 import search from './api/search'
 import categroy from './api/categroy'
+import cart from './api/cart'
 
 const app = new Koa()
 app.keys = ['mt', 'keyskeys']
@@ -52,6 +53,7 @@ async function start () {
   app.use(geo.routes()).use(geo.allowedMethods())
   app.use(search.routes()).use(search.allowedMethods())
   app.use(categroy.routes()).use(categroy.allowedMethods())
+  app.use(cart.routes()).use(cart.allowedMethods())
   app.use((ctx) => {
     ctx.status = 200
     ctx.respond = false // Bypass Koa's built-in response handling
