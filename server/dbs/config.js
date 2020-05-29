@@ -13,10 +13,10 @@ export default {
       return 'smtp.qq.com';
     },
     get user() {
-      return '1131093754@qq.com';
+      return 'xxx@qq.com';
     },
     get pass() {
-      return 'skvmhtubysregijf';
+      return 'xxx';
     },
     // 随机生成验证码
     get code() {
